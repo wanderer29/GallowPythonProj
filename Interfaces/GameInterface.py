@@ -59,6 +59,8 @@ def startGame():
     word = getRandomWord(wordsArr)
 
     #User Interface
+
+    
     
     print ("Угадайте слово: ")
 
