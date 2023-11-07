@@ -49,6 +49,26 @@ def printGallow(stage):
         print ('|           ')
         print ('|       DIED') 
 
+def encryptWord(word):
+    result = ''
+    for i in word:
+        result += '*'
+    return result
+
+def openLetters(word, letter):
+    return word
+
+def askUser(encWord):
+    state = 0
+    userLetters = []
+
+    while state <= 6:
+        print (f"Guess the word: {encWord}")
+        print ("Enter a letter:")
+        userKey = userKeys.getLetter()
+        userLetters.append(userKey)
+        print (f"You entered: {userLetters}")
+
 
 def startGame():
     with open("words.txt", "r", encoding="utf-8") as file:
@@ -57,15 +77,13 @@ def startGame():
     #Setting word
     wordsArr = file_contents.split()
     word = getRandomWord(wordsArr)
+    encWord = encryptWord(word)
 
     #User Interface
+    askUser(encWord)
 
     
-    
-    print ("Угадайте слово: ")
-
-    print(word)
-    printGallow(6)
+    # printGallow(6)
 
     
 
