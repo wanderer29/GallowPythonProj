@@ -7,16 +7,31 @@ def clearCmd():
     os.system("cls")
 
 def start():
-    clearCmd()
 
+    clearCmd()
     StartInterface.printStartPage()
-    
     key = userKeys.getKey()
     
     if key == b'\x1b':
-        print("exit")
+        return
     elif key == b'\r':
+    
         GameInterface.startGame()
-    else:
-        print("nothing")
+        StartInterface.printStartPage()
+
+        while True:
+            key = userKeys.getKey()
+            if (key == b'\x1b'):
+                return
+            elif key == b'\r':
+                GameInterface.startGame()
+                StartInterface.printStartPage()
+            
+
+
+
+
+        
+        
+        
     

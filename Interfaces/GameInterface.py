@@ -8,7 +8,7 @@ def clearCmd():
 def getRandomWord(wordsArr):
     randomNum = random.randint(0, len(wordsArr) - 1)
     return wordsArr[randomNum]
-
+    
 def printGallow(stage):
     if stage == 1:
         print ('|\n|\n|\n|\n|\n|\n|\n|\n|\n|')
@@ -55,19 +55,57 @@ def encryptWord(word):
         result += '*'
     return result
 
-def openLetters(word, letter):
-    return word
+def checkLetter(letter, word, userLetters):
+    return ((letter in word) )
 
-def askUser(encWord):
+def openLetter(letter, word, encWord):
+    for i in range(len(word)):
+        if (letter == word[i]):
+            encWord = encWord[:i] + letter + encWord[(i+1):]
+    return encWord
+    
+def isGuessed(encWord):
+    return not ('*' in encWord)
+
+def askUser(encWord, word):
     state = 0
     userLetters = []
+    outputWord = ""
 
-    while state <= 6:
-        print (f"Guess the word: {encWord}")
+    while state < 6 and isGuessed(encWord) == False:
+        printGallow(state)
+        print (f"\nGuess the word: {encWord}")
         print ("Enter a letter:")
-        userKey = userKeys.getLetter()
+
+        
+        # Read user Key if it not in userLetters
+        while True:
+            userKey = userKeys.getLetter().lower()
+            if (userKey not in userLetters):
+                break
+
         userLetters.append(userKey)
-        print (f"You entered: {userLetters}")
+
+        # Output word for user
+        outputWord = " ".join(userLetters)
+        print (f"You entered: {outputWord}")
+
+        if (userKey == '\x1b'):
+            break
+        elif (not ('*' in encWord)):
+            break
+        elif (checkLetter(userKey, word, userLetters)):
+            encWord = openLetter(userKey, word, encWord)
+        else:
+            state += 1
+    printGallow(state)
+    
+    if isGuessed(encWord):
+        print ('You guessed right!')
+    else:
+        print('Game is over!')
+        print('Unfortunately you guessed wrong')
+        
 
 
 def startGame():
@@ -80,15 +118,8 @@ def startGame():
     encWord = encryptWord(word)
 
     #User Interface
-    askUser(encWord)
+    askUser(encWord, word)
 
-    
-    # printGallow(6)
-
-    
-
-    
-    # Print the contents of the file
     
 
 
